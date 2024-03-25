@@ -27,12 +27,12 @@ class DataTransformation:
     def get_data_transformer_object(self):
         try:
             numerical_columns=["writing_score","reading_score"]
-            categorial_columns=[
+            categorical_columns=[
                 "gender",
                 "race_ethnicity",
                 "parental_level_of_education",
                 "lunch",
-                "test_preparation_course"
+                "test_preparation_course",
             ]
             
             num_pipeline=Pipeline(
@@ -51,12 +51,12 @@ class DataTransformation:
                 ]
             )
             logging.info(f"numerical columns : {numerical_columns}")
-            logging.info(f"categorial columns : {categorial_columns}")
+            logging.info(f"categorial columns : {categorical_columns}")
 
             preprocessor=ColumnTransformer(
                 [
                     ("num_pipeline",num_pipeline,numerical_columns),
-                    ("cat_pipeline",cat_pipeline,categorial_columns)
+                    ("cat_pipeline",cat_pipeline,categorical_columns)
                 ]
             )
 
@@ -77,6 +77,8 @@ class DataTransformation:
 
             preprocessing_obj=self.get_data_transformer_object()
 
+            #print("preprocessing_obj: ", preprocessing_obj)
+
             target_column_name="math_score"
             numerical_columns=["writing_score","reading_score"]
 
@@ -96,7 +98,7 @@ class DataTransformation:
             train_arr=np.c_[
                 input_feature_train_arr,np.array(target_feature_train_df)
             ]
-            test_arr=np.c_[input_feature_test_df,np.array(target_feature_test_df)]
+            test_arr=np.c_[input_feature_test_arr,np.array(target_feature_test_df)]
 
             logging.info(f"saved preprocessing object ")
 
